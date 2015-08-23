@@ -2,6 +2,8 @@ package modules;
 
 public class Product {
     
+   //product items   
+    
     private String productID;
     private String productName;
     private String productDiscription;
