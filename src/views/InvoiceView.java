@@ -1,6 +1,5 @@
 package views;
 
-import modules.Invoice;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

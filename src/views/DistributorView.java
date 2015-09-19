@@ -1,32 +1,31 @@
 package views;
 
 import modules.Distributor;
-import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import operations.DistributorModel;
+
+import javafx.application.*;
+import javafx.collections.*;
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
 
 public class DistributorView extends Application {
-    
+
     Stage window;
-    TableView<Distributor> table;
-    TextField distributorCode, distributorName, distributorAddress, distributorTel;
-    
+    static TableView<Distributor> table;
+    static TextField distributorCode, distributorName, distributorAddress, distributorTel;
+    Scene scene;
+
     public static void main(String[] args) {
         launch(args);
     }
-    
+
     @Override
     public void start(Stage primaryStage) {
+
         window = primaryStage;
         window.setTitle("Pharmacy - Distributor");
 
@@ -49,17 +48,19 @@ public class DistributorView extends Application {
         distributorName = new TextField();
         distributorName.setPromptText("Distributor Name");
         distributorName.setPrefWidth(125);
-        
+
         distributorAddress = new TextField();
         distributorAddress.setPromptText("Distributor Address");
         distributorAddress.setPrefWidth(350);
-        
+
         distributorTel = new TextField();
         distributorTel.setPromptText("Distributor Telphone");
         distributorTel.setPrefWidth(125);
-        //Button
+
         Button addButton = new Button("Add");
         addButton.setOnAction(e -> addButtonClicked());
+        Button editButton = new Button("Edit");
+        editButton.setOnAction(e -> editButtonClicked());
         Button updateButton = new Button("Update");
         updateButton.setOnAction(e -> updateButtonClicked());
         Button deleteButton = new Button("Delete");
@@ -68,11 +69,10 @@ public class DistributorView extends Application {
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(10, 10, 10, 10));
         hBox.setSpacing(10);
-        hBox.getChildren().addAll(distributorCode, distributorName, distributorAddress, distributorTel, addButton, updateButton, deleteButton);
+        hBox.getChildren().addAll(distributorCode, distributorName, distributorAddress, distributorTel, addButton, editButton, updateButton, deleteButton);
 
         table = new TableView<>();
-        //table.setPrefWidth(450);
-        //table.setPrefHeight(300);
+
         table.setItems(getDistributor());
 
         distributorCodeC.prefWidthProperty().bind(table.widthProperty().multiply(0.15));
@@ -81,46 +81,64 @@ public class DistributorView extends Application {
         distributorTelC.prefWidthProperty().bind(table.widthProperty().multiply(0.20));
 
         table.getColumns().addAll(distributorCodeC, distributorNameC, distributorAddressC, distributorTelC);
-
         VBox vBox = new VBox();
         vBox.getChildren().addAll(hBox, table);
-        Scene scene = new Scene(vBox);
+        scene = new Scene(vBox);
         window.setScene(scene);
         window.show();
     }
 
-    //Add button clicked
-    public void addButtonClicked() {
+    public static void addButtonClicked() {
         Distributor d = new Distributor();
         d.setDistributorCode(distributorCode.getText());
         d.setDistributorName(distributorName.getText());
         d.setDistributorAddress(distributorAddress.getText());
         d.setDistributorTel(distributorTel.getText());
+        DistributorModel.add(d);
         table.getItems().add(d);
+        clear();
+    }
+
+    public static void editButtonClicked() {
+        int index = table.getSelectionModel().getSelectedIndex();
+        Distributor d = table.getItems().get(index);
+        distributorCode.setText(d.getDistributorCode());
+        distributorCode.setEditable(false);
+        distributorName.setText(d.getDistributorName());
+        distributorAddress.setText(d.getDistributorAddress());
+        distributorTel.setText(d.getDistributorTel());
+    }
+
+    public static void updateButtonClicked() {
+        Distributor d = new Distributor();
+        d.setDistributorCode(distributorCode.getText());
+        d.setDistributorName(distributorName.getText());
+        d.setDistributorAddress(distributorAddress.getText());
+        d.setDistributorTel(distributorTel.getText());
+        DistributorModel.update(d);
+        clear();
+        table.setItems(getDistributor());
+    }
+
+    public static void deleteButtonClicked() {
+        int index = table.getSelectionModel().getSelectedIndex();
+        //Distributor a = table.getItems().get(index);
+        DistributorModel.remove(table.getItems().get(index).getDistributorCode());
+        table.getItems().remove(index);
+        clear();
+        table.setItems(getDistributor());
+    }
+
+    public static ObservableList<Distributor> getDistributor() {
+        ObservableList<Distributor> distributors = DistributorModel.getDistributors();
+        return distributors;
+    }
+
+    public static void clear() {
         distributorCode.clear();
         distributorName.clear();
         distributorAddress.clear();
         distributorTel.clear();
     }
 
-    //Update button clicked
-    public void updateButtonClicked() {
-
-    }
-
-    //Delete button clicked
-    public void deleteButtonClicked() {
-        ObservableList<Distributor> selected, all;
-        all = table.getItems();
-        selected = table.getSelectionModel().getSelectedItems();
-        selected.forEach(all::remove);
-    }
-
-    public ObservableList<Distributor> getDistributor() {
-        ObservableList<Distributor> distributors = FXCollections.observableArrayList();
-        return distributors;
-    }
-
-    
-    
 }

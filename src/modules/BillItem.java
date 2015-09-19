@@ -2,19 +2,29 @@ package modules;
 
 public class BillItem {
     
-    private int billItemNo;
     private String billNo;
+    private String billItemNo;
     private String productID;
-    private int quantity;
     private double unitPrice;
+    private int quantity;
     private double total;
 
-    public int getBillItemNo() {
-        return billItemNo;
+    public BillItem(String billNo, String billItemNo, String productID, double unitPrice, int quantity, double total) {
+        this.billNo = billNo;
+        this.billItemNo = billItemNo;
+        this.productID = productID;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+        this.total = total;
     }
 
-    public void setBillItemNo(int billItemNo) {
-        this.billItemNo = billItemNo;
+    public BillItem() {
+        this.billNo = "";
+        this.billItemNo = "";
+        this.productID = "";
+        this.unitPrice = 0.00;
+        this.quantity = 0;
+        this.total = 0.00;
     }
 
     public String getBillNo() {
@@ -24,7 +34,15 @@ public class BillItem {
     public void setBillNo(String billNo) {
         this.billNo = billNo;
     }
+    
+    public String getBillItemNo() {
+        return billItemNo;
+    }
 
+    public void setBillItemNo(String billItemNo) {
+        this.billItemNo = billItemNo;
+    }
+    
     public String getProductID() {
         return productID;
     }
@@ -33,20 +51,20 @@ public class BillItem {
         this.productID = productID;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public double getUnitPrice() {
         return unitPrice;
     }
 
     public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
+    }
+    
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
     
     public double getTotal() {

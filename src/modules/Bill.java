@@ -8,18 +8,20 @@ public class Bill {
     private Date billDate;
     private String billNote;
     private double billAmount;
-    
-    /*public Bill(String billNo, String billNote, double billAmount){
+
+    public Bill(String billNo, Date billDate, String billNote, double billAmount) {
         this.billNo = billNo;
+        this.billDate = billDate;
         this.billNote = billNote;
         this.billAmount = billAmount;
-    }*/
-
-    /*public Bill(){
+    }
+    
+    public Bill(){
         this.billNo = "";
+        this.billDate = null;
         this.billNote = "";
-        this.billAmount = 0.0;
-    }*/
+        this.billAmount = 0.00;
+    }
     
     public String getBillNo() {
         return billNo;
@@ -52,5 +54,5 @@ public class Bill {
     public void setBillAmount(double billAmount) {
         this.billAmount = billAmount;
     }
-    
+
 }

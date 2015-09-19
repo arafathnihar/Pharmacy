@@ -10,7 +10,6 @@ public class Invoice {
     private String invoiceNote;
     private String invoicePayMode;
     private double invoiceTotal;
-
     
     public String getInvoiceID() {
         return invoiceID;

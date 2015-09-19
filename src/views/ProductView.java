@@ -1,6 +1,5 @@
 package views;
 
-import modules.Product;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

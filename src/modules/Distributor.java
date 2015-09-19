@@ -7,6 +7,20 @@ public class Distributor {
     private String distributorAddress;
     private String distributorTel;
 
+    public Distributor(String distributorCode, String distributorName, String distributorAddress, String distributorTel) {
+        this.distributorCode = distributorCode;
+        this.distributorName = distributorName;
+        this.distributorAddress = distributorAddress;
+        this.distributorTel = distributorTel;
+    }
+    
+    public Distributor(){
+        this.distributorCode = "";
+        this.distributorName = "";
+        this.distributorAddress = "";
+        this.distributorTel = "";
+    }
+    
     public String getDistributorCode() {
         return distributorCode;
     }
